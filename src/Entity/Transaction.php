@@ -15,7 +15,7 @@ class Transaction
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?float $ammount = null;
+    private ?float $amount = null;
 
     #[ORM\Column]
     private ?float $fee = null;
@@ -39,14 +39,14 @@ class Transaction
         return $this->id;
     }
 
-    public function getAmmount(): ?float
+    public function getAmount(): ?float
     {
-        return $this->ammount;
+        return $this->amount;
     }
 
-    public function setAmmount(float $ammount): self
+    public function setAmount(float $amount): self
     {
-        $this->ammount = $ammount;
+        $this->amount = $amount;
 
         return $this;
     }
