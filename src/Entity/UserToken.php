@@ -19,6 +19,14 @@ class UserToken
     #[ORM\Column(length: 255)]
     private ?string $walletAddress = null;
 
+    #[ORM\ManyToOne(inversedBy: 'userTokens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Token $token = null;
+
+    #[ORM\ManyToOne(inversedBy: 'userTokens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +52,30 @@ class UserToken
     public function setWalletAddress(string $walletAddress): self
     {
         $this->walletAddress = $walletAddress;
+
+        return $this;
+    }
+
+    public function getToken(): ?Token
+    {
+        return $this->token;
+    }
+
+    public function setToken(?Token $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

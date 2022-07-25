@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TokenRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,14 @@ class Token
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $blockchainType = null;
+
+    #[ORM\OneToMany(mappedBy: 'token', targetEntity: UserToken::class, orphanRemoval: true)]
+    private Collection $userTokens;
+
+    public function __construct()
+    {
+        $this->userTokens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +115,36 @@ class Token
     public function setBlockchainType(?string $blockchainType): self
     {
         $this->blockchainType = $blockchainType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserToken>
+     */
+    public function getUserTokens(): Collection
+    {
+        return $this->userTokens;
+    }
+
+    public function addUserToken(UserToken $userToken): self
+    {
+        if (!$this->userTokens->contains($userToken)) {
+            $this->userTokens[] = $userToken;
+            $userToken->setToken($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserToken(UserToken $userToken): self
+    {
+        if ($this->userTokens->removeElement($userToken)) {
+            // set the owning side to null (unless already changed)
+            if ($userToken->getToken() === $this) {
+                $userToken->setToken(null);
+            }
+        }
 
         return $this;
     }
