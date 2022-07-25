@@ -26,6 +26,14 @@ class Transaction
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $occuredAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'receiverTransactions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?UserToken $receiver = null;
+
+    #[ORM\ManyToOne(inversedBy: 'senderTransactions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?UserToken $sender = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +83,30 @@ class Transaction
     public function setOccuredAt(\DateTimeInterface $occuredAt): self
     {
         $this->occuredAt = $occuredAt;
+
+        return $this;
+    }
+
+    public function getReceiver(): ?UserToken
+    {
+        return $this->receiver;
+    }
+
+    public function setReceiver(?UserToken $receiver): self
+    {
+        $this->receiver = $receiver;
+
+        return $this;
+    }
+
+    public function getSender(): ?UserToken
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?UserToken $sender): self
+    {
+        $this->sender = $sender;
 
         return $this;
     }
