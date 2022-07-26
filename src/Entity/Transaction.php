@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 #[ApiResource]
@@ -23,6 +24,12 @@ class Transaction
     private ?float $fee = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\Choice([
+            'ok',
+            'fail',
+        ]),
+    ]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -34,6 +41,9 @@ class Transaction
 
     #[ORM\ManyToOne(inversedBy: 'senderTransactions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[
+        Assert\NotNull,
+    ]
     private ?UserToken $sender = null;
 
     public function getId(): ?int

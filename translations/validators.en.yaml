@@ -1,0 +1,5 @@
+# validators.en.yaml
+
+token:
+    createdAt:
+        NotBlank: 'Please set a value..'

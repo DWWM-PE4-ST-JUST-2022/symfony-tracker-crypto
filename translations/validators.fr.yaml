@@ -1,0 +1,5 @@
+# validators.en.yaml
+
+token:
+    createdAt:
+        NotBlank: 'Merci de remplir la date.'

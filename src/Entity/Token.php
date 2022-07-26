@@ -8,9 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TokenRepository::class)]
-#[ApiResource]
+#[ApiResource(
+//    collectionOperations: ['get'],
+//    itemOperations: ['get'],
+)]
 class Token
 {
     #[ORM\Id]
@@ -19,27 +23,59 @@ class Token
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[
+        Assert\NotBlank,
+        Assert\Length([
+            'min' => 2,
+            'max' => 255,
+        ]),
+    ]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[
+        Assert\NotBlank([
+            'message' => 'token.createdAt.NotBlank',
+        ]),
+        Assert\LessThan('today'),
+        ASsert\GreaterThan('2008-01-01'),
+    ]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[
+        Assert\GreaterThanOrEqual(0),
+//        Assert\Regex('/^[0-9]+(\.[0-9]{1,3})?$/')
+    ]
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]
+    #[
+        Assert\GreaterThan(0),
+    ]
     private ?float $maxSupply = null;
 
     #[ORM\Column(nullable: true)]
+    #[
+        Assert\GreaterThan(0),
+    ]
     private ?float $circulatingSupply = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[
+        Assert\Length([
+            'max' => 255,
+        ]),
+    ]
     private ?string $blockchainType = null;
 
     #[ORM\OneToMany(mappedBy: 'token', targetEntity: UserToken::class, orphanRemoval: true)]
     private Collection $userTokens;
 
     #[ORM\Column]
+    #[
+        Assert\GreaterThan(0),
+    ]
     private ?int $rank = null;
 
     public function __construct()
