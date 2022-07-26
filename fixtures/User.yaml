@@ -1,5 +1,5 @@
 parameters:
-    password: '$2y$13$vldgApLZb5YMp51QTlLTyOSQf.TTiDYfd55FuaF6ZV2TAAdgE3enG'
+    password: '$2y$13$vldgApLZb5YMp51QTlLTyOSQf.TTiDYfd55FuaF6ZV2TAAdgE3enG' # 1234
 
 App\Entity\User:
     account (template):
