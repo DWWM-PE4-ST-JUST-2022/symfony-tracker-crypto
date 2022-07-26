@@ -1,0 +1,6 @@
+App\Entity\UserToken:
+    userToken{0..510}:
+        quantity: '<numberBetween(0.01, 100000)>'
+        walletAddress: '<uuid()>'
+        token: '@token*'
+        user: '@account*'

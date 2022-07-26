@@ -1,0 +1,71 @@
+App\Entity\Token:
+    token_btc:
+        name: 'Bitcoin'
+        rank: 1
+        createdAt: '<(new DateTime("2009"))>'
+        price: 20000
+        maxSupply: 21000000
+        circulatingSupply: 19000000
+
+    token_eth:
+        name: 'Ethereum'
+        rank: 2
+        createdAt: '<(new DateTime("2013"))>'
+        price: 1500
+        circulatingSupply: 119830324
+
+    token_usdt:
+        name: 'USDT'
+        rank: 3
+        createdAt: '<(new DateTime("2015"))>'
+        price: 1
+        circulatingSupply: 65876317670
+
+    token_usdc:
+        name: 'USDC'
+        rank: 4
+        createdAt: '<(new DateTime("2015"))>'
+        price: 1
+        circulatingSupply: 50000000
+
+    token_bnb:
+        name: 'BNB'
+        rank: 5
+        createdAt: '<(new DateTime("2015"))>'
+        price: 250
+        circulatingSupply: 50000000
+
+    token_busd:
+        name: 'BUSD'
+        rank: 6
+        createdAt: '<(new DateTime("2015"))>'
+        price: 1
+        circulatingSupply: 50000000
+
+    token_xrp:
+        name: 'Ripple'
+        rank: 7
+        createdAt: '<(new DateTime("2015"))>'
+        price: '0.33'
+        circulatingSupply: 50000000
+
+    token_ada:
+        name: 'Cardano'
+        rank: 8
+        createdAt: '<(new DateTime("2015"))>'
+        price: 0.46
+        circulatingSupply: 50000000
+
+    token_sol:
+        name: 'Solana'
+        rank: 9
+        createdAt: '<(new DateTime("2015"))>'
+        price: 35
+        circulatingSupply: 50000000
+
+    token_doge:
+        name: 'Dogecoin'
+        rank: 10
+        createdAt: '<(new DateTime("2015"))>'
+        price: 0.06
+        circulatingSupply: 50000000

@@ -1,0 +1,8 @@
+App\Entity\Transaction:
+    transaction{0..1500}:
+        amount: '<numberBetween(0.01, 100)>'
+        fee: '<numberBetween(0.001, 1)>'
+        status: '90%? "ok": "fail"'
+        occurredAt: '<dateTimeBetween("-10 years", "now")>'
+        receiver: '@userToken*'
+        sender: '@userToken*'
