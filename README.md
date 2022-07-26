@@ -14,3 +14,4 @@ It is built with [Symfony](https://symfony.com/) and [API Platform](https://api-
 ## Documentation
 
 - [How to install THIS repository on your machine](doc/0-install-repo.md)
+- [How to (re)create THIS repository from scratch](doc/1-create-scratch.md)
