@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TokenRepository::class)]
 #[ApiResource(
-//    collectionOperations: ['get'],
-//    itemOperations: ['get'],
+    collectionOperations: ['get'],
+    itemOperations: ['get'],
 )]
 class Token
 {
