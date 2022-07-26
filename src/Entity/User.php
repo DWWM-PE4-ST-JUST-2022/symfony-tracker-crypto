@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource]
@@ -36,6 +37,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[
+        Assert\Expression(
+            'this.getBirthAt() < this.getCreatedAt()',
+            message: 'Birth date must be lesser than created at.',
+        )
+    ]
     private ?\DateTimeInterface $birthAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
