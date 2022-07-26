@@ -26,7 +26,7 @@ class Transaction
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $occuredAt = null;
+    private ?\DateTimeInterface $occurredAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'receiverTransactions')]
     #[ORM\JoinColumn(nullable: false)]
@@ -77,14 +77,14 @@ class Transaction
         return $this;
     }
 
-    public function getOccuredAt(): ?\DateTimeInterface
+    public function getOccurredAt(): ?\DateTimeInterface
     {
-        return $this->occuredAt;
+        return $this->occurredAt;
     }
 
-    public function setOccuredAt(\DateTimeInterface $occuredAt): self
+    public function setOccurredAt(\DateTimeInterface $occurredAt): self
     {
-        $this->occuredAt = $occuredAt;
+        $this->occurredAt = $occurredAt;
 
         return $this;
     }
