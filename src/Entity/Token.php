@@ -39,6 +39,9 @@ class Token
     #[ORM\OneToMany(mappedBy: 'token', targetEntity: UserToken::class, orphanRemoval: true)]
     private Collection $userTokens;
 
+    #[ORM\Column]
+    private ?int $rank = null;
+
     public function __construct()
     {
         $this->userTokens = new ArrayCollection();
@@ -147,6 +150,18 @@ class Token
                 $userToken->setToken(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(int $rank): self
+    {
+        $this->rank = $rank;
 
         return $this;
     }
