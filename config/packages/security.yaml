@@ -9,6 +9,34 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+    # List of roles that your app will know:
+    # ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_STATS
+    # All roles you want to use must start by 'ROLE_'.
+    # ROLE_USER is a special role, all logged user must have this role.
+    # You can create all roles you want.
+    #
+    # In the example bellow, the ROLE_ADMIN extend the ROLE_USER. It means a user with ROLE_ADMIN will have all
+    # access allowed by the ROLE_ADMIN + all access allowed by the ROLE_USER.
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_STATS: ROLE_USER
+
+    # A role can extend from multiple roles, from its parents,  grandparents and all ancestors too.
+    # In the example bellow, the ROLE_FOO will have:
+    # + all access allowed by the ROLE_FOO
+    # + all access allowed by the ROLE_STATS
+    # + all access allowed by the ROLE_SUPER_ADMIN
+    # + all access allowed by the ROLE_ADMIN
+    # + all access allowed by the ROLE_USER
+
+#        ROLE_BAR: [ROLE_STATS, ROLE_USER]
+#        ROLE_FOO:
+#            - ROLE_STATS
+#            - ROLE_SUPER_ADMIN
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
