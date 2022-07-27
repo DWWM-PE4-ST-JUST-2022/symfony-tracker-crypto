@@ -9,7 +9,27 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    itemOperations: [
+        'get' => [
+            // Limit access to get item operation only if the logged user is one of:
+            // - have ROLE_ADMIN
+            // - is the sender
+            // - is the receiver
+            'security' => '
+                is_granted("ROLE_ADMIN")
+                or
+                object.getSender().getUser() == user
+                or
+                object.getReceiver().getUser() == user
+            ',
+        ],
+        // Do not forget to list the others operations if you want to keep them.
+        'put',
+        'delete',
+        'patch',
+    ]
+)]
 class Transaction
 {
     #[ORM\Id]

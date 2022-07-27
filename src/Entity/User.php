@@ -13,7 +13,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get' => [
+            // Limit access to get item operation only if the logged user have ROLE_ADMIN.
+            'security' => 'is_granted("ROLE_ADMIN")',
+        ],
+        'post',
+    ],
+    // In attributes, you can set security instruction to limit access for all operations of User entity
+    // both for items and collections.
+    attributes: [
+        'security' => 'is_granted("ROLE_ADMIN")',
+    ],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

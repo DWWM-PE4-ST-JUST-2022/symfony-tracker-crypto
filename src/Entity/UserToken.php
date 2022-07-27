@@ -9,7 +9,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserTokenRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    itemOperations: [
+        'get' => [
+            // Limit access to get item operation only if the logged user is one of:
+            // - have ROLE_ADMIN
+            // - is the user of the UserToken (its owner)
+            'security' => 'is_granted("ROLE_ADMIN") or object.getUser() == user',
+        ],
+        // Do not forget to list the others operations if you want to keep them.
+        'put',
+        'delete',
+        'patch',
+    ],
+)]
 class UserToken
 {
     #[ORM\Id]
