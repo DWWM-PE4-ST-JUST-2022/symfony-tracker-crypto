@@ -50,6 +50,10 @@ symfony composer install
 symfony console doctrine:database:create # shortcut d:d:c
 ```
 
+## Generate SSL keys pair
+
+[Configure SSL keys for JWT](2-ssl-key.md)
+
 ## Reset database with data
 
 You may have to use those commands multiple time during developping.
