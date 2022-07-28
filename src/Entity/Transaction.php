@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Enum\TransactionStatusEnum;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -50,7 +51,7 @@ class Transaction
             'fail',
         ]),
     ]
-    private ?string $status = null;
+    private ?string $status = TransactionStatusEnum::FAIL;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $occurredAt = null;
@@ -102,6 +103,10 @@ class Transaction
 
     public function setStatus(string $status): self
     {
+        if (!TransactionStatusEnum::isValid($status)) {
+            throw new \InvalidArgumentException('Invalid status given.');
+        }
+
         $this->status = $status;
 
         return $this;
