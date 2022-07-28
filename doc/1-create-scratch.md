@@ -145,6 +145,100 @@ Once you finished your fixtures, use this command to populate your database with
 symfony console hautelook:fixtures:load --purge-with-truncate
 ```
 
+## Authentication
+
+To make the auth in the API, we use [LexikJWTAuthenticationBundle](https://github.com/lexik/LexikJWTAuthenticationBundle)
+integration within API Platform. There is also a [doc in API Platform](https://api-platform.com/docs/core/jwt/#jwt-authentication)
+about how to install/config JWT.
+
+### Install dep
+
+Install the JWT Bundle
+```shell
+symfony composer require jwt-auth
+```
+
+### Generate SSL keys pair
+
+[Configure SSL keys for JWT](2-ssl-key.md)
+
+### Config `security.yaml`
+
+Update your existing `config/packages/security.yaml` with the code bellow. You have to adapt this code to yours
+(some part of your code must stay in the file).
+
+```yaml
+security:
+    # ...
+    firewalls:
+        # ...
+        main:
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /authentication_token
+                username_path: email # If you have change the login field in your User entity, you must change it
+                # username_path: username
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
+
+    # ...
+    access_control:
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
+```
+
+### Add auth route to `routes.yaml`
+
+Add this code at the end of your `config/routes.yaml` file:
+
+```yaml
+# ...
+authentication_token:
+    path: /authentication_token
+    methods: ['POST']
+
+```
+
+### Display the route in API's doc
+
+#### Config the auth button
+
+`config\packages\api_platform.yaml`
+```yaml
+api_platform:
+    # ...
+    swagger:
+        # ...
+        versions: [3]
+        # ...
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
+
+```
+
+#### Create the doc decorator class
+
+Create a new file `src/OpenApi/JwtDecorator.php` and copy past content from [the one in this repository](../src/OpenApi/JwtDecorator.php)
+into your project.
+
+#### Register the decorator service
+
+Add this code to the end of the file `config/services.yaml` (be careful about indent):
+
+```yaml
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']
+
+```
+
 ## Finished
 
 Now you can open your browser and go to [https://localhost:8000/api](https://localhost:8000/api).
