@@ -12,5 +12,6 @@ App\Entity\User:
     account_admin (extends account):
         email: 'admin@test.com'
         name: 'Admin'
+        roles: ['ROLE_ADMIN']
 
     account{0..105} (extends account): ~
